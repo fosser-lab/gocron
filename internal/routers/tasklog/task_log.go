@@ -32,7 +32,11 @@ func Index(ctx *macaron.Context) string {
 
 // 清空日志
 func Clear(ctx *macaron.Context) string {
+	taskId := ctx.QueryInt("task_id")
 	taskLogModel := new(models.TaskLog)
+	if taskId > 0 {
+		taskLogModel.TaskId = taskId
+	}
 	_, err := taskLogModel.Clear()
 	json := utils.JsonResponse{}
 	if err != nil {
